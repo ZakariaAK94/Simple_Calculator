@@ -1,7 +1,6 @@
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.87);
   background-color: #242424; 
 
 }
@@ -39,7 +38,7 @@
 #clear{
     grid-area: 1 / 1 / span 1 / span 2;
     background-color: #e2558a;
-    color: white;
+    
 }
 #zero
 {
@@ -64,7 +63,7 @@
     border-radius: 30px; 
     font-size: 18px; 
     font-weight: bold;
-    color: #333; 
+    color: black; 
     cursor: pointer; 
     transition: all 0.3s ease; 
   }
