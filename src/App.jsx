@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 function App() {
   
@@ -7,14 +7,26 @@ function App() {
   const et = expression.trim();
   const isOperator = (symbol) => /[*/+-]/.test(symbol);
 
+
+
   function buttonPress(symbol)
   {
       if(symbol === "clear")
       {
         setAnswer("");
         setExpression("0");
-      }else if(symbol === "=")
+      }else if(symbol === "delete")
       {
+        if(expression[expression.length-1] === " ")
+          setExpression(expression.slice(0,-3))
+        else if(expression.length !== 0)
+          setExpression(expression.slice(0,-1));
+        else
+          return
+      }
+      else if(symbol === "=")
+      {
+        if(expression.length === 0) return;
         calculate();
       }else if(isOperator(symbol))
       { 
@@ -70,6 +82,35 @@ function App() {
     setExpression("");
   };
 
+  function handleKeyDown(event) 
+  {  
+    if(event.key ==="Enter")
+    {
+      buttonPress("=");
+      event.preventDefault();
+    }else if(event.key ==="Backspace")
+    {
+        buttonPress("delete");   
+    }
+    else if(event.key ==="R")
+    {
+      buttonPress("clear");
+    }
+    else if (/[*+/-=]|\d+/.test(event.key)) 
+    {
+      buttonPress(event.key);      
+    }
+  }
+
+  const appRef = useRef(null);
+
+  useEffect(() => {
+    if (appRef.current)
+    {
+       appRef.current.focus();
+    }
+  }, []);
+
   return (
     <>
      <div className="container">         
@@ -77,11 +118,12 @@ function App() {
             <div id="answer">{answer}</div>
             <div id="expression">{expression}</div>
         </div>   
-        <div id="bts-section">  
+        <div id="bts-section" tabIndex="0" onKeyDown={handleKeyDown} ref={appRef}>  
           <button type="button" className="calculator-btns" id="clear" onClick={() => buttonPress("clear")}>AC</button>         
+          <button type="button" className="calculator-btns" id="delete" onClick={() => buttonPress("delete")}>⌫</button>         
           <button type="button" className="calculator-btns" id="multiply" onClick={() => buttonPress("*")}>*</button>  
           <button type="button" className="calculator-btns" id="divide" onClick={() => buttonPress("/")}>/</button>  
-          <button type="button" className="calculator-btns" id="seven" onClick={() => buttonPress("7")}>7</button>
+          <button type="button" className="calculator-btns" id="seven" onClick={() => buttonPress("7")} >7</button>
           <button type="button" className="calculator-btns" id="eight" onClick={() => buttonPress("8")}>8</button>
           <button type="button" className="calculator-btns" id="nine" onClick={() => buttonPress("9")}>9</button>          
           <button type="button" className="calculator-btns" id="subtract" onClick={() => buttonPress("-")}>-</button> 
@@ -96,6 +138,7 @@ function App() {
           <button type="button" className="calculator-btns" id="zero" onClick={() => buttonPress("0")}>0</button>       
           <button type="button" className="calculator-btns" id="decimal" onClick={() => buttonPress(".")}>.</button>          
         </div>
+        <div id="message">* For keyboard: AC = R *</div>
      </div>
     </>
   )

@@ -35,10 +35,11 @@
   border-bottom-left-radius: 15px;
 }
 
-#clear{
-    grid-area: 1 / 1 / span 1 / span 2;
-    background-color: #e2558a;
-    
+#clear, #delete{
+    background-color: #e2558a;    
+}
+#delete{
+    background-color: #365596;    
 }
 #zero
 {
@@ -108,5 +109,15 @@
   height: 22px;
   padding: 5px;
   color: #ffe259;
+  margin-right: 5px;
+}
+
+#message
+{
+  font-size: 20px;
+  text-align: center;
+  height: 22px;
+  padding: 5px;
+  color: #348037;
   margin-right: 5px;
 }
